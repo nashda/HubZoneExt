@@ -1,6 +1,7 @@
 const begin = "var response = JSON.parse('";
 const end = "');";
 
+
 function parseResponse(tabId,response)
 {
   const indexOfFirst = response.indexOf(begin);
@@ -10,10 +11,20 @@ function parseResponse(tabId,response)
   var json = JSON.parse(cutLeft);
   if(json.hubzone && json.hubzone.length > 0)
   {
-    chrome.scripting.executeScript({
-      target: {tabId: tabId, allFrames: true},
-      files: ['inject.js'],
-    });
+    if(json.hubzone[0].current_status && json.hubzone[0].current_status == "Qualified")
+    {
+      chrome.scripting.executeScript({
+        target: {tabId: tabId, allFrames: true},
+        files: ['qualified.js'],
+      });
+    }
+    else
+    {
+      chrome.scripting.executeScript({
+        target: {tabId: tabId, allFrames: true},
+        files: ['redesignated.js'],
+      });
+    }
 
     console.log(json.hubzone[0].current_status);
     return json.hubzone[0].current_status;
@@ -55,3 +66,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       return true;  // Will respond asynchronously.
     }
   });
+
