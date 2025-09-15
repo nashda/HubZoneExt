@@ -2,7 +2,8 @@
 var street = document.getElementsByClassName("street-address");
 if(street && street.length > 0)
 {
-    var city = document.getElementsByClassName("dp-subtext");
+    // Find address on full listing page
+    var city = document.getElementsByClassName("bp-cityStateZip");
     if(city && city.length > 0)
     {
         var address = street[0].textContent + " " + city[0].textContent;
@@ -15,8 +16,10 @@ if(street && street.length > 0)
         address = address.replace(/(\r\n|\n|\r)/gm, "");
 
         chrome.runtime.sendMessage(
-            {contentScriptQuery: "lookup", search: address},
+            {contentScriptQuery: "lookup", search: address, qualified: 'redfin-qualified.js', redesignated: 'redfin-redesignated.js'},
             hubzone => console.log(hubzone));
     }
 }
+
+
 

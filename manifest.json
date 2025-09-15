@@ -10,7 +10,11 @@
     "host_permissions": [
       "https://maps.certify.sba.gov/hubzone/map/*", 
       "https://www.redfin.com/*",
-      "https://redfin.com/*"
+      "https://redfin.com/*",
+      "https://www.loopnet.com/*",
+      "https://loopnet.com/*",
+      "https://www.zillow.com/*",
+      "https://zillow.com/*"
     ],
     "action": {
       "default_icon": {
@@ -23,7 +27,9 @@
     "web_accessible_resources": [
       {
         "resources": [ "/images/*.png" ],
-        "matches": [ "https://www.redfin.com/*" ]
+        "matches": [ "https://www.redfin.com/*",
+          "https://www.loopnet.com/*",
+          "https://www.zillow.com/*"]
       }
     ],
     "content_scripts": [
@@ -33,7 +39,23 @@
           "https://redfin.com/*"
         ],
         "all_frames": true,
-        "js": ["content-script.js"]
+        "js": ["redfin.js"]
+      },
+      {
+        "matches": [
+          "https://www.loopnet.com/*",
+          "https://loopnet.com/*"
+        ],
+        "all_frames": true,
+        "js": ["loopnet.js"]
+      },
+      {
+        "matches": [
+          "https://www.zillow.com/*",
+          "https://zillow.com/*"
+        ],
+        "all_frames": true,
+        "js": ["zillow.js"]
       }
     ],    
     "icons": {

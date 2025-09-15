@@ -1,21 +1,19 @@
-const src = chrome.runtime.getURL("images/roundCheck.png");
+const src = chrome.runtime.getURL("images/check-line.png");
 
 function injectHubzone()
 {
   if(!document.getElementById("hubzone"))
   {
-    console.log("Inject");
     var iDiv = document.createElement('div');
     iDiv.id = 'hubzone';
     var image = document.createElement("img");
     image.src = src; 
     image.setAttribute("alt","Qualified HubZone");
-    console.log("Received URL" + image.src);
     image.style.height = '20px';
     image.style.width = '20px';
     iDiv.innerHTML = '&nbsp;&nbsp;'
     iDiv.appendChild(image);
-    var addr = document.getElementsByClassName("homeAddress-variant");
+    var addr = document.getElementsByClassName("profile-hero-title");
     if(addr && addr.length > 0)
     {
       addr[0].appendChild(iDiv);

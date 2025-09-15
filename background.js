@@ -2,7 +2,7 @@ const begin = "var response = JSON.parse('";
 const end = "');";
 
 
-function parseResponse(tabId,response)
+function parseResponse(tabId,response, qualified, redesignated)
 {
   const indexOfFirst = response.indexOf(begin);
   var cutRight = response.substr(indexOfFirst + begin.length);
@@ -15,14 +15,14 @@ function parseResponse(tabId,response)
     {
       chrome.scripting.executeScript({
         target: {tabId: tabId, allFrames: true},
-        files: ['qualified.js'],
+        files: [qualified],
       });
     }
     else
     {
       chrome.scripting.executeScript({
         target: {tabId: tabId, allFrames: true},
-        files: ['redesignated.js'],
+        files: [redesignated],
       });
     }
 
@@ -59,7 +59,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
       fetch(url, requestOptions)
           .then(response => response.text())
-          .then(text => parseResponse(sender.tab.id,text))
+          .then(text => parseResponse(sender.tab.id,text,request.qualified,request.redesignated))
           .then(hubzone => sendResponse(hubzone))
           .catch(error => console.log(error))
 
