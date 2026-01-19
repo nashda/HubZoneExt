@@ -16,6 +16,25 @@ if(street && street.length > 0)
         {contentScriptQuery: "lookup", search: address, qualified: 'redfin-qualified.js', redesignated: 'redfin-redesignated.js'},
         hubzone => console.log(hubzone));
 }
+else
+{
+    var cards = document.getElementsByClassName("bp-Homecard__Address");
+    if(cards && cards.length > 0)
+    {
+        /*
+        <a class="bp-Homecard__Address flex align-center color-text-primary font-body-xsmall-compact" 
+        href="/FL/Winter-Garden/15107-Kirsty-Aly-34787/home/112768651" 
+        target="_blank">15107 Kirsty Aly, Winter Garden, FL 34787</a>
+        */
+        for(var i=0; i<cards.length; i++)
+        {
+            var address = cards[i].textContent;
 
-
-
+            address = address.replace(/(\r\n|\n|\r)/gm, "");
+            var href = cards[i].getAttribute("href");
+            chrome.runtime.sendMessage(
+                {contentScriptQuery: "search", search: address, href: href,  qualified: 'redfin-qualified.js', redesignated: 'redfin-redesignated.js'},
+                hubzone => console.log(hubzone));
+        }
+    }
+}
