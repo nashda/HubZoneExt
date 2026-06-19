@@ -1,7 +1,7 @@
 {
     "name": "HubZoneExt",
-    "description": "Chrome extension for identifying HubZone properties in Redfin",
-    "version": "1.0",
+    "description": "Chrome extension for identifying HubZone properties on real estate sites",
+    "version": "1.1",
     "manifest_version": 3,
     "background": {
         "service_worker": "background.js"
